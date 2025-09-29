@@ -1,0 +1,108 @@
+# 딸기 이중 카메라 분류 시스템 설정
+
+# 카메라 설정
+cameras:
+  top_id: 0          # Top 카메라 ID
+  side_id: 1         # Side 카메라 ID
+  width: 1280        # 해상도 너비
+  height: 720        # 해상도 높이
+  fps: 30            # 프레임 레이트
+
+# 검출 설정
+detection:
+  min_area: 500      # 최소 면적 (픽셀)
+  max_area: 50000    # 최대 면적 (픽셀)
+  confidence_threshold: 0.5  # 신뢰도 임계값
+  
+  # 색상 범위 (HSV)
+  color_ranges:
+    red1:
+      lower: [0, 50, 50]
+      upper: [10, 255, 255]
+    red2:
+      lower: [170, 50, 50]
+      upper: [180, 255, 255]
+    pink:
+      lower: [140, 50, 50]
+      upper: [170, 255, 255]
+    orange:
+      lower: [10, 50, 50]
+      upper: [25, 255, 255]
+
+# 분류 설정
+classification:
+  # 크기 기준 (mm³)
+  size_criteria:
+    small:
+      min_volume: 0
+      max_volume: 15000
+      label: "소형"
+    medium:
+      min_volume: 15000
+      max_volume: 30000
+      label: "중형"
+    large:
+      min_volume: 30000
+      max_volume: 50000
+      label: "대형"
+    extra_large:
+      min_volume: 50000
+      max_volume: 999999
+      label: "특대형"
+  
+  # 품질 기준
+  quality_criteria:
+    excellent:
+      min_confidence: 0.8
+      min_circularity: 0.7
+      label: "우수"
+    good:
+      min_confidence: 0.6
+      min_circularity: 0.5
+      label: "양호"
+    fair:
+      min_confidence: 0.4
+      min_circularity: 0.3
+      label: "보통"
+    poor:
+      min_confidence: 0.0
+      min_circularity: 0.0
+      label: "불량"
+
+# 부피 추정 설정
+volume_estimation:
+  pixel_to_mm_ratio: 0.1    # 픽셀당 mm 비율
+  camera_height: 500        # 카메라 높이 (mm)
+  camera_distance: 300      # 카메라 간 거리 (mm)
+  
+  # 추정 방법 가중치
+  method_weights:
+    ellipsoid: 0.3
+    sphere: 0.3
+    contour: 0.2
+    depth: 0.2
+
+# 출력 설정
+output:
+  save_results: true        # 결과 저장 여부
+  save_images: true         # 이미지 저장 여부
+  log_level: "INFO"         # 로그 레벨
+  
+  # 저장 경로
+  paths:
+    results: "logs/results"
+    images: "logs/images"
+    calibration: "logs/calibration"
+
+# 캘리브레이션 설정
+calibration:
+  chessboard_size: [9, 6]   # 체스보드 내부 코너 수
+  square_size: 25.0         # 사각형 크기 (mm)
+  min_images: 10            # 최소 캘리브레이션 이미지 수
+  
+# 시각화 설정
+visualization:
+  show_confidence: true     # 신뢰도 표시
+  show_size: true          # 크기 표시
+  show_grade: true         # 등급 표시
+  overlay_alpha: 0.3       # 오버레이 투명도
