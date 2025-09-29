@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 딸기 이중 카메라 분류 시스템 (Strawberry Dual Camera Sorter)
 
 ## 개요
@@ -161,3 +162,6 @@ python src/main.py
 
 ## 연락처
 프로젝트 관련 문의사항이 있으시면 이슈를 생성해 주세요.
+=======
+# strawberryberry
+>>>>>>> 1be2573e94b5940bd95d0f7ff379c9a336560d57
